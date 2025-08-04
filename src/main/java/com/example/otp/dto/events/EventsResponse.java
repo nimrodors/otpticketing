@@ -1,6 +1,6 @@
-package com.example.otp.responsedto;
+package com.example.otp.dto.events;
 
-import com.example.otp.dto.Events;
+import com.example.otp.dto.reserve.EventResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

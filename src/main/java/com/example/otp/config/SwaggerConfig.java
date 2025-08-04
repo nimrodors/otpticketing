@@ -1,4 +1,4 @@
-package com.example.otp.api;
+package com.example.otp.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.example.otp.dto;
+package com.example.otp.dto.events;
 
 import lombok.Data;
 
