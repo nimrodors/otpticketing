@@ -1,4 +1,4 @@
-package com.example.otp.dto.reserve;
+package com.example.otp.dto.events;
 
 import lombok.Getter;
 import lombok.Setter;

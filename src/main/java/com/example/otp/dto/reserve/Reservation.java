@@ -1,4 +1,4 @@
-package com.example.otp.entity;
+package com.example.otp.dto.reserve;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,6 +12,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reservationid")
     private Long reservationId;
 
     @Column(name = "event_id", nullable = false)
