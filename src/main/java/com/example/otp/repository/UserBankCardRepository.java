@@ -24,4 +24,10 @@ public interface UserBankCardRepository extends JpaRepository<UserBankCard, Inte
 
     @Query("SELECT u.userId FROM UserBankCard u WHERE u.cardId = :cardId")
     Optional<Integer> findUserIdByCardId(String cardId);
+
+    @Query("SELECT c.cardnumber FROM UserBankCard c WHERE c.cardId = :cardId")
+    Optional<String> findBankCardByCardId(String cardId);
+
+    @Query("SELECT c.amount FROM UserBankCard c WHERE c.cardId = :cardId")
+    int findAmountByCardId(String cardId);
 }

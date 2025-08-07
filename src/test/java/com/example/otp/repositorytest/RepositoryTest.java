@@ -49,6 +49,9 @@ public class RepositoryTest {
 
         Optional<String> checkTokenWithToken = userTokenRepository.findByToken("testTokenValue2025");
         assertTrue(checkTokenWithToken.isPresent());
+
+        Optional<String> checkBankCardWithCardId = userBankCardRepository.findBankCardByCardId(cardId);
+        assertTrue(checkBankCardWithCardId.isPresent());
        }
 
        @Test

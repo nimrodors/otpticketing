@@ -80,6 +80,7 @@ public class TicketController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @Operation(
             summary = "Pay and reserve a seat for a specific EVENT.",
             description = "Initiates payment and reservation for a specific event based on EventId, SeatId, and CardId.",
@@ -108,13 +109,13 @@ public class TicketController {
             Map<String, Object> error = new HashMap<>();
             error.put("success", false);
             error.put("errorCode", e.getMessage().contains("esemény") ? 20001 :
-                    e.getMessage().contains("szék") ? 20002 :
-                            e.getMessage().contains("foglalt") ? 20010 :
-                                    e.getMessage().contains("elkezdődött") ? 20011 :
-                                            e.getMessage().contains("külső rendszer") ? 20404 :
-                                                    e.getMessage().contains("nincs token") ? 10050 :
-                                                            e.getMessage().contains("lejárt token") ? 10051 :
-                                                                    e.getMessage().contains("bankkártya") ? 10010 : 10101);
+                    e.getMessage().contains("Nincs Rendelkezésre álló szék") ? 20002 :
+                            e.getMessage().contains("Ez a Szék már foglalt") ? 20010 :
+                                    e.getMessage().contains("Az esemény már elkezdődött") ? 20011 :
+                                            e.getMessage().contains("Külső rendszer nem elérhető") ? 20404 :
+                                                    e.getMessage().contains("Token nem található") ? 10050 :
+                                                            e.getMessage().contains("Token lejárt") ? 10051 :
+                                                                    e.getMessage().contains("Bankártya Hiba") ? 10010 : 10101);
             error.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         } catch (Exception e) {

@@ -8,7 +8,6 @@ import com.example.otp.dto.reserve.ReserveResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,14 +99,7 @@ public class ApiController {
             logger.error("POST /api/pay: Failed to process payment. Error: {}", e.getMessage());
             Map<String, Object> error = new HashMap<>();
             error.put("success", false);
-            error.put("errorCode", e.getMessage().contains("nincs token") ? 10050 :
-                    e.getMessage().contains("lejárt token") ? 10051 :
-                            e.getMessage().contains("bankkártya") ? 10010 :
-                                    e.getMessage().contains("egyenleg") ? 10101 :
-                                            e.getMessage().contains("esemény") ? 20001 :
-                                                    e.getMessage().contains("szék") ? 20002 :
-                                                            e.getMessage().contains("foglalt") ? 20010 :
-                                                                    e.getMessage().contains("elkezdődött") ? 20011 : 20404);
+            error.put("errorCode", e.getMessage().contains("Nincs token") ? 10050 : e.getMessage().contains("lejárt token") ? 10051 : e.getMessage().contains("bankkártya") ? 10010 : e.getMessage().contains("egyenleg") ? 10101 : e.getMessage().contains("esemény") ? 20001 : e.getMessage().contains("szék") ? 20002 : e.getMessage().contains("foglalt") ? 20010 : e.getMessage().contains("elkezdődött") ? 20011 : 20404);
             error.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         } catch (Exception e) {
