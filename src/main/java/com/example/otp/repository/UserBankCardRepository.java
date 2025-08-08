@@ -30,4 +30,6 @@ public interface UserBankCardRepository extends JpaRepository<UserBankCard, Inte
 
     @Query("SELECT c.amount FROM UserBankCard c WHERE c.cardId = :cardId")
     int findAmountByCardId(String cardId);
+
+    void deleteByCardId(String cardId);
 }

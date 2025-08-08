@@ -1,5 +1,6 @@
 package com.example.otp.ticket.controller;
 
+import com.example.otp.checker.PartnerModulChecker;
 import com.example.otp.dto.events.Events;
 import com.example.otp.dto.events.EventsResponse;
 import com.example.otp.dto.payment.PayRequest;
@@ -25,9 +26,11 @@ public class TicketController {
 
     private static final Logger logger = LoggerFactory.getLogger(TicketController.class);
     private final TicketService ticketService;
+    private final PartnerModulChecker partnerModulChecker;
 
-    public TicketController(TicketService ticketService) {
+    public TicketController(TicketService ticketService, PartnerModulChecker partnerModulChecker) {
         this.ticketService = ticketService;
+        this.partnerModulChecker = partnerModulChecker;
     }
 
     @Operation(
@@ -39,6 +42,11 @@ public class TicketController {
             })
     @GetMapping("/getEvents")
     public ResponseEntity<EventsResponse> getEvents() {
+
+        if(!partnerModulChecker.isAvailable()) {
+            logger.error("GET /ticket/getEvents: Partner modul is not available.");
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+        }
         try {
             EventsResponse eventsResponse = ticketService.getEvents();
             logger.info("GET /ticket/getEvents: Events fetched successfully.");
@@ -58,6 +66,10 @@ public class TicketController {
             })
     @GetMapping("/getTicketEvent")
     public ResponseEntity<?> getEvent(@RequestParam("EventId") Long eventId) {
+        if(!partnerModulChecker.isAvailable()) {
+            logger.error("GET /ticket/getEvents: Partner modul is not available.");
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+        }
         try {
             Optional<Events> eventResponse = Optional.ofNullable(ticketService.getEvent(eventId));
             logger.debug("Fetching event {} from partner service...", eventId);
@@ -99,6 +111,10 @@ public class TicketController {
             })
     @PostMapping("/pay")
     public ResponseEntity<?> pay(@RequestBody PayRequest payRequest) {
+        if(!partnerModulChecker.isAvailable()) {
+            logger.error("GET /ticket/getEvents: Partner modul is not available.");
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+        }
         try {
             ReserveResponse reserveResponse =
                     ticketService.pay(payRequest.getEventId(), payRequest.getSeatId(), payRequest.getCardId());
